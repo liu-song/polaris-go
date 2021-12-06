@@ -42,7 +42,7 @@ func (c *clockImpl) Now() time.Time {
 	return *nowPtr
 }
 
-//时间轮的步长
+//时间轮的步长   //  这里为什么也有个时间轮
 func TimeStep() time.Duration {
 	return 10 * time.Millisecond
 }

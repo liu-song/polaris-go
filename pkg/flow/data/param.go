@@ -18,9 +18,9 @@
 package data
 
 import (
+	"github.com/modern-go/reflect2"
 	"github.com/polarismesh/polaris-go/pkg/config"
 	"github.com/polarismesh/polaris-go/pkg/model"
-	"github.com/modern-go/reflect2"
 	"time"
 )
 
@@ -39,6 +39,7 @@ type ControlParamProvider interface {
 //为服务注册的请求设置默认值
 func BuildControlParam(
 	provider ControlParamProvider, cfg config.Configuration, param *model.ControlParam) {
+	//  reflect2可以直接用
 	if reflect2.IsNil(provider) || nil == provider.GetTimeoutPtr() {
 		param.Timeout = cfg.GetGlobal().GetAPI().GetTimeout()
 	} else {

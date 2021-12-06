@@ -26,9 +26,11 @@ import (
 	"reflect"
 	"sync/atomic"
 
-	"github.com/polarismesh/polaris-go/pkg/model"
 	"github.com/hashicorp/go-multierror"
+	"github.com/polarismesh/polaris-go/pkg/model"
 )
+
+// 各种类型插件的作用
 
 var (
 	pluginIndex int32

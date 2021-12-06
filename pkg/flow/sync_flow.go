@@ -363,12 +363,13 @@ func (e *Engine) SyncDeregister(instance *model.InstanceDeRegisterRequest) error
 		},
 		RetStatus: model.RetSuccess,
 	}
-	defer e.reportAPIStat(apiCallResult)
+	defer e.reportAPIStat(apiCallResult)  //  退出的时候进行上报
 	param := &model.ControlParam{}
-	data.BuildControlParam(instance, e.configuration, param)
+	data.BuildControlParam(instance, e.configuration, param)  // //为服务注册的请求设置默认值
 	//方法开始时间
 	startTime := e.globalCtx.Now()
 	svcKey := model.ServiceKey{Namespace: instance.Namespace, Service: instance.Service}
+	//  这里面的调用逻辑的实现
 	_, err := data.RetrySyncCall("deregister", &svcKey, instance, func(request interface{}) (interface{}, error) {
 		return nil, e.connector.DeregisterInstance(request.(*model.InstanceDeRegisterRequest))
 	}, param)

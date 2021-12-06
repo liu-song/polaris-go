@@ -87,7 +87,7 @@ type SDKContext interface {
 	 */
 	GetValueContext() model.ValueContext
 }
-
+// 这个上下文同时 给 consumer 和 provider 来进行使用
 //获取SDK上下文接口
 type SDKOwner interface {
 	//获取SDK上下文
@@ -252,6 +252,7 @@ func getHostName() string {
 }
 
 //InitContextByStream 通过配置对象新建上下文
+// 这个构建过程的作用
 func InitContextByConfig(cfg config.Configuration) (SDKContext, error) {
 	startTime := time.Now()
 	globalCtx := model.NewValueContext()
@@ -296,6 +297,7 @@ func InitContextByConfig(cfg config.Configuration) (SDKContext, error) {
 	engine := &flow.Engine{}
 	var finalErrs error
 	//初始化插件链
+	// 注意这个链和流引擎
 	err = plugManager.InitPlugins(initCtx, common.LoadedPluginTypes, engine, func() error {
 		//初始化流程引擎
 		return flow.InitFlowEngine(engine, initCtx)

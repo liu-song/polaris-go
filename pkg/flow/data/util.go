@@ -158,7 +158,8 @@ func GetLoadBalancerByLbType(lbType string, supplier plugin.Supplier) (loadbalan
 //同步调用的通用方法定义
 type SingleInvoke func(request interface{}) (interface{}, error)
 
-//通用的带重试的同步调用逻辑
+// 通用的带重试的同步调用逻辑
+// 被调用三次，注册，反注册，心跳
 func RetrySyncCall(name string, svcKey *model.ServiceKey,
 	request interface{}, call SingleInvoke, param *model.ControlParam) (interface{}, model.SDKError) {
 	retryTimes := -1
@@ -167,7 +168,7 @@ func RetrySyncCall(name string, svcKey *model.ServiceKey,
 	retryInterval := param.RetryInterval
 	for retryTimes < param.MaxRetry {
 		startTime := clock.GetClock().Now()
-		resp, err = call(request)
+		resp, err = call(request)     //  对请求进行调用处理
 		consumeTime := clock.GetClock().Now().Sub(startTime)
 		if nil == err {
 			return resp, nil

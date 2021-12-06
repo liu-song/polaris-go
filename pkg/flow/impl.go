@@ -179,7 +179,7 @@ func (e *Engine) PluginSupplier() plugin.Supplier {
 	return e.plugins
 }
 
-// watch service
+// watch service   //  服务订阅的实现
 func (e *Engine) WatchService(req *model.WatchServiceRequest) (*model.WatchServiceResponse, error) {
 	if e.subscribe != nil {
 		allInsReq := &model.GetAllInstancesRequest{}
@@ -301,7 +301,7 @@ func (e *Engine) Destroy() error {
 	return nil
 }
 
-//上报统计数据到统计插件中
+//上报统计数据到统计插件中    //同步还是异步进行了实现
 func (e *Engine) SyncReportStat(typ model.MetricType, stat model.InstanceGauge) error {
 	if !model.ValidMetircType(typ) {
 		return model.NewSDKError(model.ErrCodeAPIInvalidArgument, nil, "invalid report metric type")
